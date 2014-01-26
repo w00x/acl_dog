@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Action:</strong>
+  <%= @acl.action %>
+</p>
+
+<p>
+  <strong>Controller:</strong>
+  <%= @acl.controller %>
+</p>
+
+<p>
+  <strong>Role:</strong>
+  <%= @acl.role %>
+</p>
+
+<%= link_to 'Edit', edit_acl_path(@acl) %> |
+<%= link_to 'Back', acls_path %>

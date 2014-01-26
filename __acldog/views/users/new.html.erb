@@ -1,0 +1,16 @@
+<h2>Usuario Nuevo</h2>
+<%= render 'form' %>
+
+<% if flash[:notice] %>
+  <% if flash[:success] %>
+    <div>
+      <%= flash[:notice] %>
+    </div>
+  <% else %>
+    <div>
+      <%=flash[:notice] %>
+    </div>
+  <% end %>
+<% end %>
+
+<%= link_to 'Atras', login_path %>

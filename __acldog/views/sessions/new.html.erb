@@ -1,0 +1,27 @@
+<h1>Login</h1>
+
+<%= form_tag validate_path, :onsubmit => "return validar()" do %>
+  <div class="field">
+    <%= label_tag :email %>
+    <%= text_field_tag :email,nil,:class => "item_validatefw" %>
+  </div>
+  <div class="field">
+    <%= label_tag :password %>
+    <%= password_field_tag :password,nil,:class => "item_validatefw" %>
+  </div>
+  <div class="actions">
+    <%= submit_tag 'Login' %>
+  </div>
+<% end %>
+<%= link_to 'Crear cuenta de usuario', newuser_path %>
+<% if flash[:notice] %>
+  <% if flash[:success] %>
+    <div id="msg" class="alert alert-success">
+      <%= flash[:notice] %>
+    </div>
+  <% else %>
+    <div id="msg" class="alert alert-error">
+      <%=flash[:notice] %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,31 @@
+<h1>Listing acls</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Action</th>
+      <th>Controller</th>
+      <th>Role</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @acls.each do |acl| %>
+      <tr>
+        <td><%= acl.action %></td>
+        <td><%= acl.controller %></td>
+        <td><%= acl.role %></td>
+        <td><%= link_to 'Show', acl %></td>
+        <td><%= link_to 'Edit', edit_acl_path(acl) %></td>
+        <td><%= link_to 'Destroy', acl, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Acl', new_acl_path %>
