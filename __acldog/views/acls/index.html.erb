@@ -17,7 +17,7 @@
       <tr>
         <td><%= acl.action %></td>
         <td><%= acl.controller %></td>
-        <td><%= acl.role %></td>
+        <td><%= acl.role ? acl.role.nombre : "" %></td>
         <td><%= link_to 'Show', acl %></td>
         <td><%= link_to 'Edit', edit_acl_path(acl) %></td>
         <td><%= link_to 'Destroy', acl, method: :delete, data: { confirm: 'Are you sure?' } %></td>

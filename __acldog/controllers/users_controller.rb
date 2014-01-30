@@ -14,9 +14,12 @@ class UsersController < ApplicationController
       if params[:user][:password] == params[:user][:password_confirmation]
         User.transaction do
           @user = User.new(params[:user].permit(:email, :password))
+          @user.active = true
           @user.role_id = Role.find_by(nombre: "user").id
 
           @user.save
+
+          @acl.errors
 
           flash[:success] = true
           flash[:notice] = 'Usuario satisfactoriamente creado.'

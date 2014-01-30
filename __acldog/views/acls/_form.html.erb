@@ -14,14 +14,16 @@
   <div class="field">
     <%= f.label :action %><br>
     <%= f.text_field :action %>
+    <%= check_box_tag 'action_check' %>
   </div>
   <div class="field">
     <%= f.label :controller %><br>
     <%= f.text_field :controller %>
+    <%= check_box_tag 'controller_check' %>
   </div>
   <div class="field">
     <%= f.label :role %><br>
-    <%= f.text_field :role %>
+    <%= f.collection_select :role_id, Role.all, :id, :nombre, prompt: true %>
   </div>
   <div class="actions">
     <%= f.submit %>

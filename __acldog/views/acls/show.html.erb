@@ -12,7 +12,7 @@
 
 <p>
   <strong>Role:</strong>
-  <%= @acl.role %>
+  <%= @acl.role ? @acl.role.nombre : "" %>
 </p>
 
 <%= link_to 'Edit', edit_acl_path(@acl) %> |

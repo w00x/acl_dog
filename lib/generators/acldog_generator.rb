@@ -1,11 +1,11 @@
 class AcldogGenerator < Rails::Generators::Base
 	source_root File.expand_path("../../../", __FILE__)
 
-	gem 'digest'
-
 	def create_initializer_file
-		generate "model", "role nombre:string descripcion:string"
-		generate "model", "user email:string password:string salt:string active:boolean role:references"
+		gem 'digest'
+		
+		generate "model", "role nombre:string:uniq descripcion:string"
+		generate "model", "user email:string:uniq password:string salt:string active:boolean role:references"
 		generate "model", "acl action:string controller:string role:references"
 
 		rake "db:migrate"
@@ -13,8 +13,8 @@ class AcldogGenerator < Rails::Generators::Base
 		directory "__acldog/", "app/"
 
 		#list methods for autentication
-		inject_into_file 'app/controllers/application_controller.rb', before: "end" do <<-'RUBY'
-		before_filter :authenticate
+	inject_into_file 'app/controllers/application_controller.rb', before: "end" do <<-'RUBY'
+	before_filter :authenticate
 	before_filter :permission
 
 	include AclDog
@@ -62,23 +62,20 @@ class AcldogGenerator < Rails::Generators::Base
 		RUBY
 		end
 
-		#new routes
-		inject_into_file 'config/routes.rb', after: "Application.routes.draw do\n" do <<-'RUBY'
-	get '/newuser' => "users#new", :as => "newuser"
-	get '/login' => "sessions#new", :as => "login"
-	post '/validate' => "sessions#create", :as => "validate"
-	get '/logout' => "sessions#destroy", :as => "logout"
+	#new routes
+	route 'get "/newuser" => "users#new", :as => "newuser"'
+	route 'get "/login" => "sessions#new", :as => "login"'
+	route 'post "/validate" => "sessions#create", :as => "validate"'
+	route 'get "/logout" => "sessions#destroy", :as => "logout"'
 
-	resources :acls
+	route 'resources :acls'
 
-	get '/users/new' => "users#new", :as => "new_user"
-	post '/users/create' => "users#create", :as => "create_user"
-	get '/users/edit' => "users#edit", :as => "edit_user"
-	patch '/users/update' => "users#update", :as => "user"
-	
-	resources :roles
-		RUBY
-		end
+	route 'get "/users/new" => "users#new", :as => "new_user"'
+	route 'post "/users/create" => "users#create", :as => "create_user"'
+	route 'get "/users/edit" => "users#edit", :as => "edit_user"'
+	route 'patch "/users/create" => "users#update", :as => "user"'
+
+	route 'resources :roles'
 	
 	role_admin = Role.new(nombre: 'admin', descripcion: 'Administrator')
 	role_admin.save
@@ -91,7 +88,10 @@ class AcldogGenerator < Rails::Generators::Base
 	acl = Acl.new(action: '[all]', controller: '[all]', role_id: role_admin.id)
 	acl.save
 
+	puts "User: admin@admin.com"
+	puts "Password: admin"
 
+	puts "type: rake routes, for see new routes."
 
 	end
 end
