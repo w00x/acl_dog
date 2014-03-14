@@ -11,13 +11,17 @@ class User < ActiveRecord::Base
   end
 
   def authenticated?(password)
-    self.password == encrypt(password)
+    sub_salt = encrypt(self.salt[8,5])
+    self.password == (encrypt(password).insert(9,sub_salt))
   end
 
   protected
     def encrypt_new_password
       return if password.blank?
-      self.password = encrypt(password)
+      salt = encrypt(Time.now.to_s+self.email)
+      self.salt = salt
+      sub_salt = encrypt(self.salt[8,5])
+      self.password = encrypt(password).insert(9,sub_salt)
     end
 
     def password_required?

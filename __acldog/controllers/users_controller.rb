@@ -19,8 +19,6 @@ class UsersController < ApplicationController
 
           @user.save
 
-          @acl.errors
-
           flash[:success] = true
           flash[:notice] = 'Usuario satisfactoriamente creado.'
           redirect_to login_path
@@ -35,7 +33,7 @@ class UsersController < ApplicationController
       flash[:notice] = 'Problemas al crear el usuario'
       
       ActiveRecord::Rollback
-      render :action => 'new',:layout => false
+      redirect_to new_user_path
     end
   end
   

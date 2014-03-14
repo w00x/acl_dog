@@ -3,10 +3,11 @@ class AcldogGenerator < Rails::Generators::Base
 
 	def create_initializer_file
 		gem 'digest'
-		
-		generate "model", "role nombre:string:uniq descripcion:string"
-		generate "model", "user email:string:uniq password:string salt:string active:boolean role:references"
-		generate "model", "acl action:string controller:string role:references"
+		gem 'mysql2'
+
+		generate "model", "role nombre:string:uniq descripcion:string --force"
+		generate "model", "user email:string:uniq password:string salt:string active:boolean role:references --force"
+		generate "model", "acl action:string controller:string role:references --force"
 
 		rake "db:migrate"
 
